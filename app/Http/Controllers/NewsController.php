@@ -33,16 +33,16 @@ class NewsController extends Controller
          */
 
         try{
-            $ch = curl_init();
+            $connection = curl_init();
 
             // set url
-            curl_setopt($ch, CURLOPT_URL,  $url);
+            curl_setopt($connection, CURLOPT_URL,  $url);
 
            // return the transfer as a string
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($connection, CURLOPT_RETURNTRANSFER, true);
 
             // $output contains the output string
-            $output = curl_exec($ch);
+            $output = curl_exec($connection);
 
              $response = json_decode($output,true);
 //            return $response['articles'];
@@ -51,7 +51,7 @@ class NewsController extends Controller
                 ->withErrors($ex->getMessage() );
         } finally {
             // close curl resource to free up system resources
-            curl_close($ch);
+            curl_close($connection);
         }
         if(isset($response['articleCount']) && $response['articleCount'] >0 ){
             $news = new News();
