@@ -25,8 +25,8 @@ class NewsController extends Controller
 
     public function index(){
         $response = null;
-       $url = "https://gnews.io/api/v3/search?q=none&token=16d422f0d4bfe835e0c18d5dd580b3e5";
-//       $url = "https://gnews.io/api/v3/search?q=none&token=1db2bbd53ffbfc069ef5cf6b35e7f0f8a"; my personal key
+//       $url = "https://gnews.io/api/v3/search?q=none&token=16d422f0d4bfe835e0c18d5dd580b3e5";
+       $url = "https://gnews.io/api/v3/search?q=none&token=db2bbd53ffbfc069ef5cf6b35e7f0f8a";
         try{
             $ch = curl_init();
 
