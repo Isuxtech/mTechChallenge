@@ -1,5 +1,13 @@
 MTECH CHALLENGE REPOSITORY README
 
+AUTHOR: Omokpo Gabriel
+Email: omokpogabriel@gmail.com
+
+Language used: Php
+Framework: Laravel
+Database: MySQL
+
+
 PLEASE perform the following steps after cloning this repository:
 
 1. run composer install -  this will get all the required dependency
@@ -9,4 +17,4 @@ PLEASE perform the following steps after cloning this repository:
 
 
 
-CONTACT THE AUTHOR : isuxteach@gmail.com for any addition information
+Feel free to contactthe Author  for any addition information
