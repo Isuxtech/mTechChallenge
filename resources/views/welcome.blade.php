@@ -28,7 +28,9 @@
             <h2>{{$message}}</h2>
             @enderror
         @else
+            @isset($No_of_articles)
             <h3 style="color:green;">{{$No_of_articles}} Articles were added to the database</h3>
+            @endisset
         @endif
 
     </div>
