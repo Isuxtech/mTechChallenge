@@ -20,4 +20,4 @@ PLEASE perform the following steps after cloning this repository:
 
 
 
-Feel free to contactthe Author  for any addition information
+Feel free to contact the Author  for any addition information
