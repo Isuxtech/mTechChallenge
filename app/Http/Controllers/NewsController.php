@@ -50,7 +50,6 @@ class NewsController extends Controller
 
         return $this->checkResponse($response);
 
-        return view('.welcome')->withErrors($response);
 
     }
 
@@ -63,6 +62,8 @@ class NewsController extends Controller
             $this->addRecord($response);
             return view('.welcome')->with('No_of_articles',$response['articleCount']);
         }
+
+        return view('.welcome')->withErrors($response);
     }
 
     /***
