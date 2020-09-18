@@ -23,13 +23,15 @@
         <div style="width:max-content; margin: auto;margin-top:20vh;padding:30px;">
         <label for="" style="text-align:center;margin-bottom: 10px;font-size: 2rem">Response:</label>
         @if($errors->any())
-            <h3 style="color:red;">Request failed</h3>
-            @error('errors')
-            <h2>{{$message}}</h2>
-            @enderror
+            <div style="color:red;">
+                <h3>Request failed</h3>
+                @error('errors')
+                <h2>{{$message}}</h2>
+                @enderror
+            </div>
         @else
             @isset($No_of_articles)
-            <h3 style="color:green;">{{$No_of_articles}} Articles were added to the database</h3>
+            <h2 style="color:green;">{{$No_of_articles}} Articles were added to the database</h2>
             @endisset
         @endif
 

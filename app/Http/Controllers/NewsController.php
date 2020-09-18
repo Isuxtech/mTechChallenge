@@ -15,28 +15,23 @@ class NewsController extends Controller
      *
      * @uses curl
      * @description
-     * this function uses url to get the resource from the api endpoint whcih contains an teimstamp, articleCount and an array of articles
+     * this function uses curl to get the resource from the api endpoint which contains an timestamp, articleCount and an array of articles
      *
-     * on successful retrival, i looked through the articles array and inserted the current array in the loop into the database
-     * and the return the "welcome view (page)" to the client containing a response
+     * on successful retrieval, i looped through the articles array and inserted the current array in the loop into the database
+     * and the returned the "welcome view (page)" to the client containing a response
      *
-     * in case of am Exception,  a response indicating the error is set to the client
+     * in case of an Exception,  a response indicating the error is set to the client
      */
 
     public function index(){
         $response = null;
        $url = "https://gnews.io/api/v3/search?q=none&token=16d422f0d4bfe835e0c18d5dd580b3e5";
-        /***
-         * the endpoint send to my email had reached its daily limit so i created this endpoint below
-         * to fasten my solution since the challenge is time based
-         *  $url = "https://gnews.io/api/v3/search?q=none&token=db2bbd53ffbfc069ef5cf6b35e7f0f8a";
-         */
-
-        try{
+       try{
             $connection = curl_init();
 
             // set url
             curl_setopt($connection, CURLOPT_URL,  $url);
+            curl_setopt($connection, CURLOPT_FAILONERROR, true);
 
            // return the transfer as a string
             curl_setopt($connection, CURLOPT_RETURNTRANSFER, true);
@@ -44,16 +39,37 @@ class NewsController extends Controller
             // $output contains the output string
             $output = curl_exec($connection);
 
-             $response = json_decode($output,true);
-//            return $response['articles'];
+              $response = json_decode($output,true);
+
         }catch(\Throwable $ex){
-            return view('.welcome')
-                ->withErrors($ex->getMessage() );
+            return view('.welcome')->withErrors($ex->getMessage() );
         } finally {
             // close curl resource to free up system resources
             curl_close($connection);
         }
-        if(isset($response['articleCount']) && $response['articleCount'] >0 ){
+
+        return $this->checkResponse($response);
+
+        return view('.welcome')->withErrors($response);
+
+    }
+
+    private function checkResponse($response){
+        if(!isset($response)){
+            return view('.welcome')->withErrors(['errors'=>'Could not get required resource']);
+        }
+
+        if(isset($response['articleCount']) && $response['articleCount'] >0 ) {
+            $this->addRecord($response);
+            return view('.welcome')->with('No_of_articles',$response['articleCount']);
+        }
+    }
+
+    /***
+     * @param $response
+     * this function inserts a new record from the endpoint to the database
+     */
+    private function addRecord($response){
             $news = new News();
             foreach($response['articles'] as $key=>$article){
                 $news->title = $article['title'];
@@ -65,11 +81,6 @@ class NewsController extends Controller
                 $news->source_url = $article['source']['url'];
                 $news->save();
             }
-            return view('.welcome')
-                ->with('No_of_articles',$response['articleCount']);
-        }
-        return view('.welcome')
-            ->withErrors($response);
 
     }
 }
