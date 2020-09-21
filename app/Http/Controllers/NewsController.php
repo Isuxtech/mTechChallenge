@@ -71,8 +71,9 @@ class NewsController extends Controller
      * this function inserts a new record from the endpoint to the database
      */
     private function addRecord($response){
-            $news = new News();
+            
             foreach($response['articles'] as $key=>$article){
+                $news = new News();
                 $news->title = $article['title'];
                 $news->description = $article['description'];
                 $news->url= $article['url'];
@@ -82,6 +83,7 @@ class NewsController extends Controller
                 $news->source_url = $article['source']['url'];
                 $news->save();
             }
+         
 
     }
 }
